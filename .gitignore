@@ -1,6 +1,7 @@
 *~
 *.pyc
 *.tar.gz
+*.csv
+data/
 
 /ipynb_checkpoints/
-

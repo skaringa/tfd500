@@ -9,5 +9,8 @@ This repository contains:
 - Some python scripts to control the ELV TFD500 logger from the Linux
   command line (`src/README`_).
 
+- Python and Shell scripts to visualize and store the data (`plot/README`_).
+
 .. _linux/README: linux/README.rst
 .. _src/README: src/README.rst
+.. _plot/README: plot/README.rst
