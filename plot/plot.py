@@ -4,6 +4,7 @@
 import sys
 import csv
 from datetime import datetime
+from dateutil import tz
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
@@ -16,10 +17,18 @@ if len(sys.argv) != 2:
 times = []
 temps = []
 hums = []
+tz = tz.gettz('Europe/Berlin')
+dst = None
 with open(sys.argv[1], 'r') as f:
   reader = csv.reader(f, delimiter=';')
   for row in reader:
-    times.append(datetime.strptime(row[1], "%d.%m.%Y %H:%M:%S"))
+    t = datetime.strptime(row[1], "%d.%m.%Y %H:%M:%S").replace(tzinfo=tz)
+    if dst is None:
+      dst = t.dst()
+    elif t.dst() != dst:
+      # we have to adjust the time because the tdf500 isn't aware of DST 
+      t = t + t.dst()-dst
+    times.append(t)
     temps.append(row[2])
     hums.append(row[3])
 
