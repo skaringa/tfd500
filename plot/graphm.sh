@@ -1,11 +1,13 @@
 #!/bin/sh
+if [ -z $1 ] ; then range=month ; else range=$1 ; fi 
+echo range=$range
 DATADIR=$(dirname $0)/../data
 RRD=$DATADIR/temphygro.rrd
 temp=$(mktemp --tmpdir tXXXXXX.gif)
 hum=$(mktemp --tmpdir hXXXXXX.gif)
 comb=$(mktemp --tmpdir cXXXXXX.gif)
 rrdtool graph $temp \
-  -s 'now -1 month' -e 'now' \
+  -s "now -1 $range" -e 'now' \
   -w 1000 -h 300 \
   DEF:tempmin=$RRD:temp:MIN \
   DEF:tempmax=$RRD:temp:MAX \
@@ -16,7 +18,7 @@ rrdtool graph $temp \
   LINE1:tempmax#0000ff \
   LINE2:temp#0000ff:"Temperatur [°C]" 
 rrdtool graph $hum \
-  -s 'now -1 month' -e 'now' \
+  -s "now -1 $range" -e 'now' \
   -w 1000 -h 300 \
   DEF:hummin=$RRD:hum:MIN \
   DEF:hummax=$RRD:hum:MAX \
