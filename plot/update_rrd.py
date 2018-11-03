@@ -31,5 +31,8 @@ with open(sys.argv[1], 'r') as f:
       t = t + t.dst()-dst
     update = "%d:%.1f:%.0f" % (time.mktime(t.timetuple()), float(row[2]), float(row[3]))
 
-    #print(row[1], update)
-    rrdtool.update(rrdb, update)
+    #print("{}/{}".format(row[1], t))
+    try:
+        rrdtool.update(rrdb, update)
+    except rrdtool.OperationalError as e:
+        print(e)
