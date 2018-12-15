@@ -29,9 +29,8 @@ with open(sys.argv[1], 'r') as f:
       # we have to adjust the time because the tdf500 isn't aware of DST 
       t = t + t.dst()-dst
     times.append(t)
-    temps.append(row[2])
-    hums.append(row[3])
-
+    temps.append(float(row[2]))
+    hums.append(float(row[3]))
 
 # create plot with two y-axis
 fig, ax1 = plt.subplots(figsize=(10,8))
