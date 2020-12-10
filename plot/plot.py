@@ -7,6 +7,7 @@ from datetime import datetime
 from dateutil import tz
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import matplotlib.ticker as ticker
 
 # check args
 if len(sys.argv) != 2:
@@ -48,15 +49,14 @@ for tl in ax2.get_yticklabels():
 # format the date x-axis
 days = mdates.DayLocator()
 dayFmt = mdates.DateFormatter('%d.%m.')
-hours = mdates.HourLocator((6, 12, 18))
+hours = mdates.HourLocator((12,))
 
 ax1.xaxis.set_major_locator(days)
-ax1.xaxis.set_major_formatter(dayFmt)
+ax1.xaxis.set_major_formatter(ticker.NullFormatter())
 ax1.xaxis.set_minor_locator(hours)
-#ax1.xaxis.set_minor_formatter(dayFmt)
+ax1.xaxis.set_minor_formatter(dayFmt)
+plt.setp(ax1.xaxis.get_minorticklabels(), rotation=45)
 
 ax1.grid(True)
 
-
-fig.autofmt_xdate()
 plt.show()
